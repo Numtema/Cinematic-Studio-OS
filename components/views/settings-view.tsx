@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'motion/react';
 import { User, CreditCard, Key, Settings, Shield, Bell, LogOut } from 'lucide-react';
 
@@ -60,8 +61,8 @@ export function SettingsView() {
             <h3 className="text-xl font-bold mb-6">User Profile</h3>
             
             <div className="flex items-center gap-6 mb-8">
-              <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-border bg-background">
-                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" className="w-full h-full object-cover" />
+              <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-border bg-background relative">
+                <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" fill className="object-cover" referrerPolicy="no-referrer" />
               </div>
               <div>
                 <button className="px-4 py-2 bg-background border border-border hover:border-text-secondary rounded-full text-sm font-medium transition-colors mb-2">

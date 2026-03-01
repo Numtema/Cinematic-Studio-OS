@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useAppStore } from '@/store/app-store';
 import { useFlowStore } from '@/store/flow-store';
 import { motion } from 'motion/react';
@@ -66,9 +67,9 @@ export function TopBar() {
 
         <button 
           onClick={() => setActiveView('settings')}
-          className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors overflow-hidden"
+          className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors overflow-hidden relative"
         >
-          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" className="w-full h-full object-cover" />
+          <Image src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" fill className="object-cover" referrerPolicy="no-referrer" />
         </button>
       </div>
     </motion.header>

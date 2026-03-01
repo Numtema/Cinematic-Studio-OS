@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} dark`}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} dark`} suppressHydrationWarning>
       <body className="bg-background text-text-primary antialiased selection:bg-clay selection:text-white overflow-hidden">
         {/* Noise Overlay */}
         <div className="pointer-events-none fixed inset-0 z-[9999] opacity-[0.02]">

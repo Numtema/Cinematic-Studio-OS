@@ -35,7 +35,7 @@ export function Sidebar() {
       initial={false}
       animate={{ width: isSidebarCollapsed ? 80 : 260 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="relative flex flex-col h-[calc(100vh-2rem)] bg-surface/80 backdrop-blur-xl border border-white/5 rounded-[2.5rem] m-4 p-4 shadow-2xl overflow-hidden z-50"
+      className="relative flex flex-col h-[calc(100vh-2rem)] bg-surface/80 backdrop-blur-xl border border-border rounded-[2.5rem] m-4 p-4 shadow-2xl overflow-hidden z-50"
     >
       {/* Logo Area */}
       <div className="flex items-center justify-between mb-8 px-2 mt-2">
@@ -51,7 +51,7 @@ export function Sidebar() {
         )}
         <button 
           onClick={toggleSidebar}
-          className="p-2 rounded-full hover:bg-white/5 transition-colors text-text-secondary hover:text-text-primary"
+          className="p-2 rounded-full hover:bg-background transition-colors text-text-secondary hover:text-text-primary"
         >
           {isSidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
@@ -69,7 +69,7 @@ export function Sidebar() {
               onClick={() => setActiveView(item.id)}
               className={cn(
                 "relative flex items-center w-full p-3 rounded-2xl transition-all duration-300 group",
-                isActive ? "text-text-primary bg-white/5" : "text-text-secondary hover:text-text-primary hover:bg-white/5"
+                isActive ? "text-text-primary bg-background" : "text-text-secondary hover:text-text-primary hover:bg-background"
               )}
             >
               {isActive && (
@@ -93,21 +93,6 @@ export function Sidebar() {
           );
         })}
       </nav>
-
-      {/* User Profile / Bottom Action */}
-      <div className="mt-auto pt-4 border-t border-white/5">
-        <button className="flex items-center w-full p-2 rounded-2xl hover:bg-white/5 transition-colors">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-moss to-elevated border border-white/10 flex items-center justify-center shrink-0">
-            <span className="text-xs font-bold text-white">NH</span>
-          </div>
-          {!isSidebarCollapsed && (
-            <div className="ml-3 text-left">
-              <div className="text-sm font-medium text-text-primary">Admin</div>
-              <div className="text-xs text-text-secondary">Pro Studio Tier</div>
-            </div>
-          )}
-        </button>
-      </div>
     </motion.aside>
   );
 }

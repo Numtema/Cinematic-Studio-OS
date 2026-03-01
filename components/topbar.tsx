@@ -3,10 +3,10 @@
 import { useAppStore } from '@/store/app-store';
 import { useFlowStore } from '@/store/flow-store';
 import { motion } from 'motion/react';
-import { ChevronDown, Zap, Download, Loader2 } from 'lucide-react';
+import { ChevronDown, Zap, Download, Loader2, Moon, Sun, User } from 'lucide-react';
 
 export function TopBar() {
-  const { isSidebarCollapsed } = useAppStore();
+  const { isSidebarCollapsed, theme, toggleTheme, activeProject, setActiveView } = useAppStore();
   const { flowState, activeNode, exportBuild } = useFlowStore();
 
   return (
@@ -18,27 +18,30 @@ export function TopBar() {
         left: isSidebarCollapsed ? 112 : 300 
       }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="fixed top-4 right-8 z-40 h-16 bg-surface/80 backdrop-blur-xl border border-white/5 rounded-full px-6 flex items-center justify-between shadow-lg"
+      className="fixed top-4 right-8 z-40 h-16 bg-surface/80 backdrop-blur-xl border border-border rounded-full px-6 flex items-center justify-between shadow-lg"
     >
       {/* Left section: Project selector & Status */}
       <div className="flex items-center gap-6">
-        <button className="flex items-center gap-2 text-sm font-medium text-text-primary hover:text-white transition-colors">
+        <button 
+          onClick={() => setActiveView('projects')}
+          className="flex items-center gap-2 text-sm font-medium text-text-primary hover:text-clay transition-colors"
+        >
           <span className="opacity-50">Project:</span>
-          <span>Nura Health Landing</span>
+          <span>{activeProject ? activeProject.name : 'Select Project'}</span>
           <ChevronDown size={14} className="opacity-50" />
         </button>
 
-        <div className="h-4 w-px bg-white/10" />
+        <div className="h-4 w-px bg-border" />
 
         <div className="flex items-center gap-2 text-xs font-mono text-text-secondary">
-          <div className={`w-2 h-2 rounded-full ${flowState === 'running' ? 'bg-clay animate-pulse shadow-[0_0_8px_#CC5833]' : 'bg-moss shadow-[0_0_8px_#2E4036]'}`} />
+          <div className={`w-2 h-2 rounded-full ${flowState === 'running' ? 'bg-clay animate-pulse shadow-[0_0_8px_var(--clay)]' : 'bg-moss shadow-[0_0_8px_var(--moss)]'}`} />
           <span>{flowState === 'running' ? 'SYSTEM PROCESSING' : 'SYSTEM OPERATIONAL'}</span>
         </div>
       </div>
 
       {/* Right section: Actions */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5 text-xs font-mono text-text-secondary">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background border border-border text-xs font-mono text-text-secondary">
           {flowState === 'running' ? <Loader2 size={12} className="text-clay animate-spin" /> : <Zap size={12} className="text-clay" />}
           <span>NODE: {activeNode ? activeNode : 'IDLE'}</span>
         </div>
@@ -50,6 +53,22 @@ export function TopBar() {
         >
           <Download size={14} />
           <span>Export Build</span>
+        </button>
+
+        <div className="h-4 w-px bg-border mx-1" />
+
+        <button 
+          onClick={toggleTheme}
+          className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors"
+        >
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+
+        <button 
+          onClick={() => setActiveView('settings')}
+          className="w-10 h-10 rounded-full bg-background border border-border flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors overflow-hidden"
+        >
+          <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" className="w-full h-full object-cover" />
         </button>
       </div>
     </motion.header>

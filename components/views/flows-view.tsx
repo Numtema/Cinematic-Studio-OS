@@ -17,12 +17,13 @@ import {
 import '@xyflow/react/dist/style.css';
 import { motion, AnimatePresence } from 'motion/react';
 import { Network, X, CheckCircle2, Loader2, AlertCircle, Clock, RefreshCw } from 'lucide-react';
+import { useAppStore } from '@/store/app-store';
 import { useFlowStore } from '@/store/flow-store';
 
 const CustomNode = ({ data, isConnectable }: any) => {
   return (
-    <div className={`px-6 py-4 rounded-2xl border ${data.isActive ? 'border-clay shadow-[0_0_20px_rgba(204,88,51,0.2)]' : 'border-white/10'} bg-surface/90 backdrop-blur-sm min-w-[200px] transition-all`}>
-      <Handle type="target" position={Position.Top} isConnectable={isConnectable} className="w-3 h-3 bg-white/20 border-none" />
+    <div className={`px-6 py-4 rounded-2xl border ${data.isActive ? 'border-clay shadow-[0_0_20px_rgba(204,88,51,0.2)]' : 'border-border'} bg-surface/90 backdrop-blur-sm min-w-[200px] transition-all`}>
+      <Handle type="target" position={Position.Top} isConnectable={isConnectable} className="w-3 h-3 bg-border border-none" />
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <span className="text-xs font-mono text-text-secondary uppercase tracking-widest">{data.id}</span>
@@ -30,12 +31,12 @@ const CustomNode = ({ data, isConnectable }: any) => {
             data.status === 'success' ? 'bg-moss' : 
             data.status === 'running' ? 'bg-clay animate-pulse' : 
             data.status === 'error' ? 'bg-red-500' : 
-            'bg-white/20'
+            'bg-border'
           }`} />
         </div>
-        <h3 className="font-bold text-sm">{data.label}</h3>
+        <h3 className="font-bold text-sm text-text-primary">{data.label}</h3>
       </div>
-      <Handle type="source" position={Position.Bottom} isConnectable={isConnectable} className="w-3 h-3 bg-white/20 border-none" />
+      <Handle type="source" position={Position.Bottom} isConnectable={isConnectable} className="w-3 h-3 bg-border border-none" />
     </div>
   );
 };
@@ -57,20 +58,21 @@ const initialNodes: Node[] = [
 ];
 
 const initialEdges: Edge[] = [
-  { id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e1-3', source: '1', target: '3', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e2-4', source: '2', target: '4', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e3-4', source: '3', target: '4', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e4-5', source: '4', target: '5', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e4-6', source: '4', target: '6', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e5-7', source: '5', target: '7', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e6-7', source: '6', target: '7', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e7-8', source: '7', target: '8', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
-  { id: 'e8-9', source: '8', target: '9', animated: true, style: { stroke: 'rgba(255,255,255,0.2)' } },
+  { id: 'e1-2', source: '1', target: '2', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e1-3', source: '1', target: '3', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e2-4', source: '2', target: '4', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e3-4', source: '3', target: '4', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e4-5', source: '4', target: '5', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e4-6', source: '4', target: '6', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e5-7', source: '5', target: '7', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e6-7', source: '6', target: '7', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e7-8', source: '7', target: '8', animated: true, style: { stroke: 'var(--border)' } },
+  { id: 'e8-9', source: '8', target: '9', animated: true, style: { stroke: 'var(--border)' } },
 ];
 
 export function FlowsView() {
   const { nodeStatuses, activeNode } = useFlowStore();
+  const { theme } = useAppStore();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNodeData, setSelectedNodeData] = useState<any | null>(null);
@@ -112,7 +114,7 @@ export function FlowsView() {
         </div>
       </div>
 
-      <div className="flex-1 bg-surface rounded-[3rem] border border-white/5 shadow-lg overflow-hidden relative">
+      <div className="flex-1 bg-surface rounded-[3rem] border border-border shadow-lg overflow-hidden relative">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -122,20 +124,20 @@ export function FlowsView() {
           nodeTypes={nodeTypes}
           fitView
           className="bg-background/50"
-          colorMode="dark"
+          colorMode={theme === 'dark' ? 'dark' : 'light'}
         >
-          <Background variant={BackgroundVariant.Dots} color="rgba(255,255,255,0.05)" gap={24} />
-          <Controls className="bg-surface border-white/10 fill-white" />
+          <Background variant={BackgroundVariant.Dots} color="var(--border)" gap={24} />
+          <Controls className="bg-surface border-border fill-text-primary" />
           <MiniMap 
-            className="bg-surface border-white/10" 
+            className="bg-surface border-border" 
             nodeColor={(n) => {
               const status = nodeStatuses[n.id];
-              if (status === 'success') return '#2E4036';
-              if (status === 'running') return '#CC5833';
+              if (status === 'success') return 'var(--moss)';
+              if (status === 'running') return 'var(--clay)';
               if (status === 'error') return '#ef4444';
-              return 'rgba(255,255,255,0.1)';
+              return 'var(--border)';
             }}
-            maskColor="rgba(0,0,0,0.5)"
+            maskColor="var(--bg)"
           />
         </ReactFlow>
 
@@ -147,53 +149,53 @@ export function FlowsView() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute top-0 right-0 bottom-0 w-80 bg-surface/95 backdrop-blur-xl border-l border-white/10 p-6 shadow-2xl z-10 flex flex-col"
+              className="absolute top-0 right-0 bottom-0 w-80 bg-surface/95 backdrop-blur-xl border-l border-border p-6 shadow-2xl z-10 flex flex-col"
             >
               <div className="flex items-center justify-between mb-8">
                 <h3 className="font-mono text-sm tracking-widest text-text-secondary">{selectedNodeData.id}</h3>
                 <button 
                   onClick={() => setSelectedNodeData(null)}
-                  className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                  className="p-2 rounded-full hover:bg-background transition-colors text-text-secondary hover:text-text-primary"
                 >
                   <X size={16} />
                 </button>
               </div>
 
-              <h2 className="text-xl font-bold mb-6">{selectedNodeData.label}</h2>
+              <h2 className="text-xl font-bold mb-6 text-text-primary">{selectedNodeData.label}</h2>
 
               <div className="space-y-6 flex-1">
                 <div>
                   <h4 className="text-xs font-mono text-text-secondary mb-2 uppercase">Current Status</h4>
-                  <div className="flex items-center gap-2 bg-white/5 p-3 rounded-xl border border-white/5">
+                  <div className="flex items-center gap-2 bg-background p-3 rounded-xl border border-border">
                     {selectedNodeData.status === 'success' && <CheckCircle2 size={16} className="text-moss" />}
                     {selectedNodeData.status === 'running' && <Loader2 size={16} className="text-clay animate-spin" />}
                     {selectedNodeData.status === 'error' && <AlertCircle size={16} className="text-red-500" />}
                     {selectedNodeData.status === 'idle' && <Clock size={16} className="text-text-secondary" />}
-                    <span className="capitalize font-medium">{selectedNodeData.status}</span>
+                    <span className="capitalize font-medium text-text-primary">{selectedNodeData.status}</span>
                   </div>
                 </div>
 
                 <div>
                   <h4 className="text-xs font-mono text-text-secondary mb-2 uppercase">Node Properties</h4>
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-3 text-sm">
+                  <div className="bg-background p-4 rounded-xl border border-border space-y-3 text-sm">
                     <div className="flex justify-between">
                       <span className="text-text-secondary">Idempotent</span>
                       <span className="text-moss">True</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-text-secondary">Retries</span>
-                      <span>3/3</span>
+                      <span className="text-text-primary">3/3</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-text-secondary">Timeout</span>
-                      <span>30s</span>
+                      <span className="text-text-primary">30s</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               <button 
-                className="w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 transition-colors font-medium text-sm flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-xl bg-background hover:bg-surface border border-border transition-colors font-medium text-sm flex items-center justify-center gap-2 text-text-primary"
                 disabled={selectedNodeData.status === 'running'}
               >
                 <RefreshCw size={14} />

@@ -9,6 +9,7 @@ import { ComponentsView } from '@/components/views/components-view';
 import { ArtifactsView } from '@/components/views/artifacts-view';
 import { TemplatesView } from '@/components/views/templates-view';
 import { ProjectsView } from '@/components/views/projects-view';
+import { SettingsView } from '@/components/views/settings-view';
 
 export default function Home() {
   const { activeView, isSidebarCollapsed } = useAppStore();
@@ -27,6 +28,8 @@ export default function Home() {
         return <TemplatesView />;
       case 'projects':
         return <ProjectsView />;
+      case 'settings':
+        return <SettingsView />;
       default:
         return <div className="flex items-center justify-center h-full text-text-secondary">View not implemented yet.</div>;
     }

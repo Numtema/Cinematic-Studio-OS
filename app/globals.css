@@ -2,22 +2,47 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-background: #121212;
-  --color-surface: #1A1A1A;
-  --color-elevated: #202020;
-  --color-moss: #2E4036;
-  --color-clay: #CC5833;
-  --color-text-primary: #F1F1F1;
-  --color-text-secondary: #A8A8A8;
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-moss: var(--moss);
+  --color-clay: var(--clay);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border);
 
   --font-sans: var(--font-plus-jakarta-sans);
   --font-serif: var(--font-cormorant-garamond);
   --font-mono: var(--font-jetbrains-mono);
 }
 
+:root {
+  /* Dark mode (default) */
+  --bg: #121212;
+  --surface: #1A1A1A;
+  --elevated: #202020;
+  --moss: #2E4036;
+  --clay: #CC5833;
+  --text-primary: #F1F1F1;
+  --text-secondary: #A8A8A8;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+.light {
+  /* Light mode */
+  --bg: #F8F9FA;
+  --surface: #FFFFFF;
+  --elevated: #F1F3F5;
+  --moss: #2E4036; 
+  --clay: #CC5833; 
+  --text-primary: #121212;
+  --text-secondary: #6B7280;
+  --border: rgba(0, 0, 0, 0.1);
+}
+
 body {
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
+  background-color: var(--bg);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

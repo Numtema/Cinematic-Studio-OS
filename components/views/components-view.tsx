@@ -17,7 +17,7 @@ export function ComponentsView() {
           </h2>
           <p className="text-text-secondary text-sm mt-1">Reusable, high-fidelity component artifacts.</p>
         </div>
-        <button className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium transition-colors">
+        <button className="px-4 py-2 bg-background hover:bg-surface border border-border rounded-full text-sm font-medium transition-colors text-text-primary">
           + New Morsel
         </button>
       </div>
@@ -37,17 +37,17 @@ export function ComponentsView() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="group relative bg-surface rounded-[2rem] border border-white/5 p-6 hover:shadow-2xl hover:border-white/10 transition-all duration-300 flex flex-col justify-between h-64 overflow-hidden"
+                className="group relative bg-surface rounded-[2rem] border border-border p-6 hover:shadow-2xl hover:border-text-secondary/50 transition-all duration-300 flex flex-col justify-between h-64 overflow-hidden"
               >
                 {/* Background Glow */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-br from-border to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative z-10 flex justify-between items-start">
                   <div className="flex flex-col gap-2">
                     <span className="text-xs font-mono text-text-secondary uppercase tracking-widest">{morsel.type}</span>
-                    <h3 className="text-xl font-bold">{morsel.name}</h3>
+                    <h3 className="text-xl font-bold text-text-primary">{morsel.name}</h3>
                   </div>
-                  <button className="p-2 rounded-full bg-white/5 text-text-secondary hover:text-white transition-colors">
+                  <button className="p-2 rounded-full bg-background text-text-secondary hover:text-text-primary transition-colors">
                     {morsel.locked ? <Lock size={16} /> : <Unlock size={16} />}
                   </button>
                 </div>
